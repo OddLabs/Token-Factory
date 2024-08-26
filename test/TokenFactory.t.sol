@@ -20,9 +20,15 @@ contract CounterTest is Test {
         // Create and impersionate client
         address client = vm.randomAddress();
         vm.deal(client, 1 ether);
-        vm.prank(client);
+
+        vm.startPrank(client);
+
+        vm.expectEmit(true, false, false, false);
+        emit TokenFactory.TokenCreated(address(client), address(1));
         address tokenAddress =
             tokenFactory.createToken(DEFAULT_TOKEN_NAME, DEFAULT_TOKEN_SYMBOL, DEFAULT_INITIAL_SUPPLY);
+
+        vm.stopPrank();
 
         // Retrieve and check created Token
         Token createdToken = Token(tokenAddress);

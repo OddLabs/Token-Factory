@@ -5,6 +5,8 @@ import {Token} from "./Token.sol";
 import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
 contract TokenFactory is Ownable {
+    event TokenCreated(address indexed creator, address tokenAddress);
+
     uint256 private fee;
 
     constructor(uint256 _initialFee) Ownable(msg.sender) {
@@ -14,8 +16,6 @@ contract TokenFactory is Ownable {
     function setFee(uint256 _newFee) public onlyOwner {
         fee = _newFee;
     }
-
-    event TokenCreated(address indexed creator, address tokenAddress);
 
     function createToken(string memory _name, string memory _symbol, uint256 _initialSupply)
         public
