@@ -2,19 +2,16 @@
 pragma solidity ^0.8.20;
 
 import {Token} from "./Token.sol";
+import {Chargeable} from "./Chargeable.sol";
 import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract TokenFactory is Ownable {
+contract TokenFactory is Ownable, Chargeable {
     event TokenCreated(address indexed creator, address tokenAddress);
 
-    uint256 private fee;
+    constructor(uint256 _fee) Ownable(msg.sender) Chargeable(_fee) {}
 
-    constructor(uint256 _initialFee) Ownable(msg.sender) {
-        fee = _initialFee;
-    }
-
-    function setFee(uint256 _newFee) public onlyOwner {
-        fee = _newFee;
+    function canSetFee() internal view override returns (bool) {
+        return msg.sender == owner();
     }
 
     function createToken(string memory _name, string memory _symbol, uint256 _initialSupply)
