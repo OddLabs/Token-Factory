@@ -15,6 +15,11 @@ abstract contract Chargeable {
         _;
     }
 
+    modifier requiresFeePaid() {
+        require(msg.value >= fee, "Insufficient Ether sent.");
+        _;
+    }
+
     function setFee(uint256 _newFee) external onlyIfCanSetFee {
         fee = _newFee;
     }

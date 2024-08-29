@@ -2,17 +2,17 @@
 pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
-import {TokenFactory} from "../src/TokenFactory.sol";
+import {TokenFactoryERC721} from "../src/TokenFactoryERC721.sol";
 
-contract TokenFactoryScript is Script {
-    TokenFactory public tokenFactory;
+contract TokenFactoryERC721Script is Script {
+    TokenFactoryERC721 public tokenFactoryERC721;
 
     function setUp() public {}
 
     function run() public {
         vm.startBroadcast();
 
-        tokenFactory = new TokenFactory(1 wei);
+        tokenFactoryERC721 = new TokenFactoryERC721(1 wei);
 
         vm.stopBroadcast();
     }
